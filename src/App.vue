@@ -3,14 +3,9 @@
     <header><h1>My Friends</h1></header>
     <ul>
       <friend-contact
-        name="Somnath Sardar"
-        email-address="somnath96sardar@gmail.com"
-        phone-nember="8584002927"
-      ></friend-contact>
-      <friend-contact
-        name="Rabin Sardar"
-        email-address="rabin.sardar@gmail.com"
-        phone-nember="78768574543"
+        v-for="friend in friends"
+        v-bind:key="friend.id"
+        v-bind:friend="friend"
       ></friend-contact>
     </ul>
   </section>
