@@ -1,13 +1,20 @@
 <template>
   <section>
     <header><h1>My Friends</h1></header>
-    <ul>
+    <add-friend
+      v-on:add-frind="addNewFriend"
+      v-bind:addButtonText="addButtonText"
+    ></add-friend>
+    <ul v-if="friends.length">
       <friend-contact
         v-for="friend in friends"
         v-bind:key="friend.id"
         v-bind:friend="friend"
         v-on:toggle-favorite="toggleFavorite"
       ></friend-contact>
+    </ul>
+    <ul v-else>
+      <li>You have no friens yet. Add new friend.</li>
     </ul>
   </section>
 </template>
@@ -16,27 +23,27 @@
 export default {
   data: function () {
     return {
-      friends: [
-        {
-          id: 1,
-          name: "Somnath Sardar",
-          phone: 8485002927,
-          email: "somnath96sardar@gmail.com",
-          isFavorite: true,
-        },
-        {
-          id: 2,
-          name: "Rabin Sardar",
-          phone: 8485002246,
-          email: "rabin.sardar@gmail.com",
-          isFavorite: false,
-        },
-      ],
+      addButtonText: "Add new",
+      friends: [],
     };
   },
   methods: {
+    addNewFriend(friendData) {
+      let tempData = {
+        ...friendData,
+        id: Date.now(),
+      };
+      this.addButtonText = "Adding...";
+      setTimeout(() => {
+        this.friends.unshift(tempData);
+        this.addButtonText = "Added.";
+        setTimeout(() => {
+          this.addButtonText = "Add new";
+        }, 1000);
+      }, 2000);
+    },
     toggleFavorite(friendId) {
-      var myFriend = this.friends.find(f => f.id === friendId);
+      var myFriend = this.friends.find((f) => f.id === friendId);
       myFriend.isFavorite = !myFriend.isFavorite;
     },
   },
@@ -74,7 +81,8 @@ header {
   list-style: none;
 }
 
-#app li {
+#app li, 
+#app form {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 1rem auto;
   border-radius: 10px;
