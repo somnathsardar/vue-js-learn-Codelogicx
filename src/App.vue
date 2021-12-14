@@ -6,6 +6,7 @@
         v-for="friend in friends"
         v-bind:key="friend.id"
         v-bind:friend="friend"
+        v-on:toggle-favorite="toggleFavorite"
       ></friend-contact>
     </ul>
   </section>
@@ -21,15 +22,23 @@ export default {
           name: "Somnath Sardar",
           phone: 8485002927,
           email: "somnath96sardar@gmail.com",
+          isFavorite: true,
         },
         {
           id: 2,
           name: "Rabin Sardar",
           phone: 8485002246,
           email: "rabin.sardar@gmail.com",
+          isFavorite: false,
         },
       ],
     };
+  },
+  methods: {
+    toggleFavorite(friendId) {
+      var myFriend = this.friends.find(f => f.id === friendId);
+      myFriend.isFavorite = !myFriend.isFavorite;
+    },
   },
 };
 </script>
